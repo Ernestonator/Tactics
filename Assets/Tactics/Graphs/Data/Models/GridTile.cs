@@ -1,4 +1,4 @@
-﻿namespace Tactics.Graphs.Services
+﻿namespace Tactics.Graphs.Data.Models
 {
     public class GridTile
     {

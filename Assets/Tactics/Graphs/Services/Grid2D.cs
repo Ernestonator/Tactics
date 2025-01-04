@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using Tactics.Graphs.Data.Models;
 
 namespace Tactics.Graphs.Services
 {
