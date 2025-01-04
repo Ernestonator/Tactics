@@ -35,7 +35,10 @@ namespace Tactics.GridView.Services
             {
                 var tile = Object.Instantiate(_tilePrefab, _tilesRoot);
                 var node = _grid2D.Graph.Nodes[i];
-                node.Content.TileView = tile;
+                node.Content.TileView = new TileView()
+                {
+                    TileGameObject = tile
+                };
                 var xPos = node.Content.XIndex * _tileSize - gridCenter.x;
                 var zPos = node.Content.YIndex * _tileSize - gridCenter.y;
                 tile.transform.position = new Vector3(xPos,tile.transform.position.y, zPos);
