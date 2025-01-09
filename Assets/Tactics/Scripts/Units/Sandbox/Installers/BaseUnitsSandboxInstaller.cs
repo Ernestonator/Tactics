@@ -4,14 +4,14 @@ using Zenject;
 
 namespace Tactics.Units.Sandbox.Installers
 {
-    public class SandboxInstaller : MonoInstaller
+    public class BaseUnitsSandboxInstaller : MonoInstaller
     {
         [SerializeField]
-        BaseUnitSpawner _baseUnitSpawner;
+        BaseUnitSpawner baseUnitSpawner;
         
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<BaseUnitSpawner>().FromInstance(_baseUnitSpawner).AsSingle();
+            Container.BindInterfacesAndSelfTo<BaseUnitSpawner>().FromInstance(baseUnitSpawner).AsSingle();
         }
     }
 }

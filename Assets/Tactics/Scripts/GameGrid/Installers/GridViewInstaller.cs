@@ -17,7 +17,7 @@ namespace Tactics.GameGrid.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<GameGridSpawner>().AsSingle().WithArguments(gridSize, tileSize, tilePrefab, tilesRoot);
+            Container.BindInterfacesAndSelfTo<GameGridSpawner>().AsSingle().WithArguments(gridSize, tileSize, tilePrefab, tilesRoot);
         }
     }
 }

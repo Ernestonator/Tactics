@@ -11,10 +11,11 @@ namespace Tactics.PlayerUnits.Services
         [Inject]
         GameGridSpawner _gridSpawner;
      
-        public UnitDataContainer UnitDataContainer { get; }   
+        public UnitDataContainer UnitDataContainer { get; private set; }   
         public IUnitMovement UnitMovement { get; private set; }
         
-        public BaseUnitFacade(UnitDataContainer unitDataContainer)
+        [Inject]
+        public void Construct(UnitDataContainer unitDataContainer)
         {
             UnitDataContainer = unitDataContainer;
             UnitMovement = new BaseUnitMovement(_gridSpawner.Grid, unitDataContainer.MovementParameters);

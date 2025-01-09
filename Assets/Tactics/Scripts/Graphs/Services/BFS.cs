@@ -31,7 +31,7 @@ namespace Tactics.Graphs.Services
             {
                 var (currentPoint, movesLeft) = queue.Dequeue();
 
-                if (movesLeft == 0)
+                if (movesLeft <= 0)
                 {
                     continue;
                 }
@@ -49,8 +49,7 @@ namespace Tactics.Graphs.Services
                     if (nx >= 0 && nx < _grid.Width && ny >= 0 && ny < _grid.Height && !visitedTiles.Contains(neighbourNode))
                     {
                         visitedTiles.Add(neighbourNode);
-                        movesLeft--;
-                        queue.Enqueue((new Vector2Int(nx, ny), movesLeft));
+                        queue.Enqueue((new Vector2Int(nx, ny), movesLeft - 1));
                     }
                 }
             }

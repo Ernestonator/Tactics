@@ -18,7 +18,11 @@ namespace Tactics.Units.Services
         {
             _grid = grid;
             _movementParameters = movementParameters;
-            _lastPosition = _movementParameters.StartingPosition;
+        }
+
+        public void SetLogicPosition(Vector2Int position)
+        {
+            _lastPosition = position;
         }
 
         public List<Node<GameTile>> GetTilesInRange()

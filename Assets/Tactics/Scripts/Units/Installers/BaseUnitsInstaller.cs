@@ -12,6 +12,7 @@ namespace Tactics.Units.Installers
         public override void InstallBindings()
         {
             var factory = new BaseUnitFactory(unitDataPrefab, unitsRoot);
+            Container.Inject(factory); 
             Container.BindInterfacesAndSelfTo<BaseUnitFactory>().FromInstance(factory).AsSingle();
         }
     }

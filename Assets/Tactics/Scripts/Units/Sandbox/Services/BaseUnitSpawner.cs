@@ -28,6 +28,8 @@ namespace Tactics.Units.Sandbox.Services
             _units.Push(unit);
             _gameGridSpawner.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
             unit.UnitDataContainer.UnitGameObject.transform.SetParent(node.Content.TileView.TileGameObject.transform);
+            unit.UnitDataContainer.UnitGameObject.transform.localPosition = Vector3.zero;
+            unit.UnitMovement.SetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
         }
 
         [ContextMenu(nameof(DespawnLast))]
@@ -41,6 +43,7 @@ namespace Tactics.Units.Sandbox.Services
         public void SeeRangeOfLatestUnit()
         {
             var lastUnit = _units.Peek();
+            _activeUnit = lastUnit;
             var nodes = lastUnit.UnitMovement.GetTilesInRange();
 
             for (int i = 0; i < nodes.Count; i++)

@@ -21,8 +21,7 @@ namespace Tactics.Units.Services
         public BaseUnitFacade Create()
         {
             var dataContainer = _unitDataContainerFactory.Create(_parent);
-            var unit = new BaseUnitFacade(dataContainer);
-            _container.Inject(unit);
+            var unit = _container.Instantiate<BaseUnitFacade>(new [] {dataContainer});
             return unit;
         }
     }
