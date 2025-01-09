@@ -1,0 +1,4 @@
+{
+	"name": "Tactics.Units.Sandbox",
+	"references":[ "GUID:de7c022eec170fa4ca31db55b604036f", "GUID:49ba686ef403e1e4b9a523135ea18385", "GUID:4eccb611de6bd184faf9f72ebe9d2596", "GUID:a7cb620f1ede5054a9e70c742eb5c4c1", "GUID:0d8beb7f090555447a6cf5ce9e54dbb4" ]
+}

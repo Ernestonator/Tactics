@@ -1,8 +1,8 @@
-﻿using Tactics.GridView.Services;
+﻿using Tactics.GameGrid.Implementation.Services;
 using UnityEngine;
 using Zenject;
 
-namespace Tactics.GridView.Installers
+namespace Tactics.GameGrid.Installers
 {
     public class GridViewInstaller : MonoInstaller
     {
@@ -17,7 +17,7 @@ namespace Tactics.GridView.Installers
 
         public override void InstallBindings()
         {
-            Container.BindInterfacesTo<GridSpawner>().AsSingle().WithArguments(gridSize, tileSize, tilePrefab, tilesRoot);
+            Container.BindInterfacesTo<GameGridSpawner>().AsSingle().WithArguments(gridSize, tileSize, tilePrefab, tilesRoot);
         }
     }
 }

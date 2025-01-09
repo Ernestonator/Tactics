@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using JetBrains.Annotations;
 using Tactics.Graphs.Data.Models;
 
 namespace Tactics.Graphs.Services
@@ -10,6 +9,9 @@ namespace Tactics.Graphs.Services
         private readonly int _width;
         
         public Graph<TTileContent> Graph { get; private set; }
+        
+        public int Height => _height;
+        public int Width => _width;
         
         public Grid2D(int height, int width)
         {
@@ -69,6 +71,11 @@ namespace Tactics.Graphs.Services
                     node.Connections.Add(bottomNeighbour);
                 }
             }
+        }
+
+        public bool TryFindNodeAt(int x, int y, out Node<TTileContent> node)
+        {
+            return TryFindNodeAt(Graph, x, y, out node);
         }
 
         private bool TryFindNodeAt(Graph<TTileContent> graph, int x, int y, out Node<TTileContent> node)

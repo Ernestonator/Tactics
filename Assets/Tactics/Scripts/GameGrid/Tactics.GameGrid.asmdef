@@ -1,10 +1,8 @@
 {
-    "name": "Tactics.Units",
+    "name": "Tactics.GameGrid",
     "rootNamespace": "",
     "references": [
-        "UniTask",
         "Tactics.Graphs",
-        "Tactics.GameGrid",
         "Tactics.GridView",
         "Zenject"
     ],

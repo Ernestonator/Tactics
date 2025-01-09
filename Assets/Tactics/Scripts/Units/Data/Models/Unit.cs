@@ -1,9 +1,13 @@
-﻿using Tactics.Units.Services;
+﻿using System;
+using Tactics.Units.Services;
+using UnityEngine;
 
 namespace Tactics.Units.Data.Models
 {
+    [Serializable]
     public class Unit
     {
-        public UnitContainer Container { get; set; }
+        [field: SerializeField]
+        public UnitDataContainer DataContainer { get; private set; }
     }
 }

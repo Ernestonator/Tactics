@@ -418,7 +418,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 458899799}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 91f4f81bf6884a3796a9526667dfc921, type: 3}
+  m_Script: {fileID: 11500000, guid: 231e1bb332ce4c309121f98048977ebd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridSize: 12
@@ -536,7 +536,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _scriptableObjectInstallers: []
   _monoInstallers:
-  - {fileID: 458899801}
+  - {fileID: 0}
   _installerPrefabs: []
   _autoRun: 1
   OnPreInstall:
