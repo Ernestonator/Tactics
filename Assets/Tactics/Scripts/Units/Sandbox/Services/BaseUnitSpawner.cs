@@ -24,12 +24,18 @@ namespace Tactics.Units.Sandbox.Services
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
+            _gameGridSpawner.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
+            if (node.Content.IsOccupied())
+            {
+                Debug.LogError($"Cannot spawn unit at {spawnPoint.x}, {spawnPoint.y}");
+                return;
+            }
+            
             var unit = _factory.Create();
             _units.Push(unit);
-            _gameGridSpawner.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
             unit.UnitDataContainer.UnitGameObject.transform.SetParent(node.Content.TileView.TileGameObject.transform);
             unit.UnitDataContainer.UnitGameObject.transform.localPosition = Vector3.zero;
-            unit.UnitMovement.SetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
+            unit.UnitMovement.TrySetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
         }
 
         [ContextMenu(nameof(DespawnLast))]

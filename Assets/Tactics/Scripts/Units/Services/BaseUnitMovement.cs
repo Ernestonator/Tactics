@@ -20,9 +20,21 @@ namespace Tactics.Units.Services
             _movementParameters = movementParameters;
         }
 
-        public void SetLogicPosition(Vector2Int position)
+        public bool TrySetLogicPosition(Vector2Int position)
         {
+            if (!_grid.TryFindNodeAt(position.x, position.y, out var node))
+            {
+                return false;
+            }
+
+            if (node.Content.IsOccupied())
+            {
+                return false;
+            }
+            
             _lastPosition = position;
+            node.Content.SetOccupied(true);
+            return true;
         }
 
         public List<Node<GameTile>> GetTilesInRange()

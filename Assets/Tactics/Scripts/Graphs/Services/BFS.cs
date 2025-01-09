@@ -46,7 +46,10 @@ namespace Tactics.Graphs.Services
                     var neighbourNode = node.Connections[i];
                     var (nx, ny) = (neighbourNode.Content.XIndex, neighbourNode.Content.YIndex);
 
-                    if (nx >= 0 && nx < _grid.Width && ny >= 0 && ny < _grid.Height && !visitedTiles.Contains(neighbourNode))
+                    var tileInRange = nx >= 0 && nx < _grid.Width && ny >= 0 && ny < _grid.Height;
+                    var tileNotOccupied = !neighbourNode.Content.IsOccupied();
+                    var tileNotVisited = !visitedTiles.Contains(neighbourNode);
+                    if (tileInRange && tileNotOccupied && tileNotVisited)
                     {
                         visitedTiles.Add(neighbourNode);
                         queue.Enqueue((new Vector2Int(nx, ny), movesLeft - 1));
