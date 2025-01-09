@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using JetBrains.Annotations;
+using Tactics.GameGrid.Data.Models;
 using Tactics.GameGrid.Implementation.Services;
+using Tactics.Graphs.Services;
 using Tactics.PlayerUnits.Services;
 using Tactics.Units.Services;
 using UnityEngine;
@@ -13,14 +15,17 @@ namespace Tactics.Units.Sandbox.Services
         private readonly Stack<BaseUnitFacade> _units = new();
         
         [SerializeField] private Vector2Int spawnPoint;
+        [SerializeField] private Vector2Int targetPoint;
         
         [CanBeNull] private BaseUnitFacade _activeUnit;
         
         [Inject]
-        BaseUnitFactory _factory;
+        private BaseUnitFactory _factory;
         [Inject]
-        GameGridSpawner _gameGridSpawner;
+        private GameGridSpawner _gameGridSpawner;
 
+        private List<Node<GameTile>> _activePath;
+        
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
@@ -33,9 +38,10 @@ namespace Tactics.Units.Sandbox.Services
             
             var unit = _factory.Create();
             _units.Push(unit);
+            unit.UnitMovement.TrySetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
             unit.UnitDataContainer.UnitGameObject.transform.SetParent(node.Content.TileView.TileGameObject.transform);
             unit.UnitDataContainer.UnitGameObject.transform.localPosition = Vector3.zero;
-            unit.UnitMovement.TrySetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
+            _activeUnit = unit;
         }
 
         [ContextMenu(nameof(DespawnLast))]
@@ -43,13 +49,13 @@ namespace Tactics.Units.Sandbox.Services
         {
             var lastUnit = _units.Pop();
             lastUnit.Dispose();
+            _activeUnit = _units.Peek();
         }
         
         [ContextMenu(nameof(SeeRangeOfLatestUnit))]
         public void SeeRangeOfLatestUnit()
         {
             var lastUnit = _units.Peek();
-            _activeUnit = lastUnit;
             var nodes = lastUnit.UnitMovement.GetTilesInRange();
 
             for (int i = 0; i < nodes.Count; i++)
@@ -72,6 +78,67 @@ namespace Tactics.Units.Sandbox.Services
             {
                 nodes[i].Content.GameTileComponent.ResetColor();
             }
+        }
+        
+        [ContextMenu(nameof(CalculatePathForLatestUnit))]
+        public void CalculatePathForLatestUnit()
+        {
+            if (_activeUnit == null)
+            {
+                return;
+            }
+
+            ResetPathForLatestUnit();
+            var nodes = _activeUnit.UnitMovement.CalculatePath(targetPoint);
+
+            if (nodes == null)
+            {
+                Debug.LogError($"Can't reach path to {targetPoint}.");
+                return;
+            }
+
+            _activePath = nodes;
+
+            for (int i = 0; i < nodes.Count; i++)
+            {
+                nodes[i].Content.GameTileComponent.ChangeColor(Color.green);
+            }
+        }
+        
+        [ContextMenu(nameof(ResetPathForLatestUnit))]
+        public void ResetPathForLatestUnit()
+        {
+            if (_activePath == null)
+            {
+                return;
+            }
+            
+            for (int i = 0; i < _activePath.Count; i++)
+            {
+                _activePath[i].Content.GameTileComponent.ResetColor();
+            }
+        }
+        
+        [ContextMenu(nameof(PerformMovementToLatestPath))]
+        public void PerformMovementToLatestPath()
+        {
+            if (_activeUnit == null)
+            {
+                return;
+            }
+            
+            if (_activePath == null)
+            {
+                return;
+            }
+
+            ResetRangeOfLatestUnit();
+            ResetPathForLatestUnit();
+
+            var lastNode = _activePath[^1];
+            _activeUnit.UnitMovement.TrySetLogicPosition(new Vector2Int(lastNode.Content.XIndex, lastNode.Content.YIndex));
+            _activeUnit.UnitDataContainer.UnitGameObject.transform.SetParent(lastNode.Content.TileView.TileGameObject.transform);
+            _activeUnit.UnitDataContainer.UnitGameObject.transform.localPosition = Vector3.zero;
         }
     }
 }

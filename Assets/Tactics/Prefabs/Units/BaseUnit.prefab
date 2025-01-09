@@ -46,7 +46,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   <MovementParameters>k__BackingField:
-    <Range>k__BackingField: 3
+    <Range>k__BackingField: 4
   <UnitGameObject>k__BackingField: {fileID: 4174433201429033693}
 --- !u!1 &6277890908826070557
 GameObject:
