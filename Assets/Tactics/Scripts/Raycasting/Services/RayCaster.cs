@@ -20,9 +20,13 @@ namespace Tactics.Raycasting.Services
             
             if (Physics.Raycast(ray, out RaycastHit hit, distance))
             {
+                castResult = hit.collider.GetComponentInChildren<T>();
+                if (castResult == null)
+                {
+                    return false;
+                }
                 hitPoint = hit.point;
                 hitNormal = hit.normal;
-                castResult = hit.collider.GetComponentInChildren<T>();
                 return true;
             }
 
