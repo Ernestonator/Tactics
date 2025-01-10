@@ -1,0 +1,20 @@
+{
+    "name": "Tactics.Players",
+    "rootNamespace": "",
+    "references": [
+        "Tactics.Raycasting",
+        "Zenject",
+        "Tactics.InputSystem",
+        "Unity.InputSystem",
+        "UniRx"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
