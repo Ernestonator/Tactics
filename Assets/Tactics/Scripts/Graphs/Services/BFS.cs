@@ -60,8 +60,6 @@ namespace Tactics.Graphs.Services
             return visitedTiles;
         }
 
-        // TODO: validate if it works corretly, seems to work wrong.
-        // https://chatgpt.com/c/67795f39-edfc-800c-a680-29218a354099
         public bool TryCalculateShortestPath(Vector2Int startPoint, Vector2Int targetPoint, int range,
             out List<Node<TTileContent>> path)
         {
@@ -112,7 +110,7 @@ namespace Tactics.Graphs.Services
                     var tileNotVisited = !visitedTiles.Contains(neighbourNode);
                     if (tileInRange && tileNotOccupied && tileNotVisited)
                     {
-                        var newPath = new List<Node<TTileContent>>(currentPath) { node };
+                        var newPath = new List<Node<TTileContent>>(currentPath) { neighbourNode };
 
                         if ((nx, ny) == (endNode.Content.XIndex, endNode.Content.YIndex))
                         {

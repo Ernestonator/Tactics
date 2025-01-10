@@ -24,17 +24,6 @@ namespace Tactics.Units.Services
 
         public bool TrySetLogicPosition(Vector2Int position)
         {
-            if (_lastPosition.HasValue)
-            {
-                if (!_grid.TryFindNodeAt(position.x, position.y, out var lastNode))
-                {
-                    Debug.LogError($"Could not find last node at {position}");
-                    return false;
-                } 
-                
-                lastNode.Content.SetOccupied(false);
-            }
-            
             if (!_grid.TryFindNodeAt(position.x, position.y, out var node))
             {
                 return false;
@@ -43,6 +32,17 @@ namespace Tactics.Units.Services
             if (node.Content.IsOccupied())
             {
                 return false;
+            }
+            
+            if (_lastPosition.HasValue)
+            {
+                if (!_grid.TryFindNodeAt(_lastPosition.Value.x, _lastPosition.Value.y, out var lastNode))
+                {
+                    Debug.LogError($"Could not find last node at {position}");
+                    return false;
+                } 
+                
+                lastNode.Content.SetOccupied(false);
             }
             
             _lastPosition = position;

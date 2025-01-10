@@ -1,11 +1,11 @@
 {
-    "name": "Tactics.GameGrid",
+    "name": "Tactics.GameGrid.Sandbox",
     "rootNamespace": "",
     "references": [
-        "Tactics.Graphs",
-        "Tactics.GridView",
         "Zenject",
-        "Unity.TextMeshPro"
+        "Tactics.GameGrid",
+        "Tactics.GridView",
+        "Tactics.Graphs"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
