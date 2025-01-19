@@ -1,6 +1,6 @@
 ﻿using System;
 using Tactics.InputSystem.Services;
-using Tactics.Players.Data.Models;
+using Tactics.Raycasting.Data.Models;
 using Tactics.Raycasting.Services;
 using UniRx;
 using UnityEngine.InputSystem;
@@ -11,14 +11,14 @@ namespace Tactics.Players.Services
     public class PlayerInteractions : IInitializable, IDisposable
     {
         private readonly CompositeDisposable _subscriptions = new();
-        private readonly Subject<PlayerInteractionData> _interactSubject = new();
+        private readonly Subject<InteractionData> _interactSubject = new();
         
         [Inject]
         private RayCaster _rayCaster;
         [Inject]
         private InputsProvider _inputsProvider;
         
-        public IObservable<PlayerInteractionData> OnPlayerInteract => _interactSubject.AsObservable();
+        public IObservable<InteractionData> OnPlayerInteract => _interactSubject.AsObservable();
         
         public void Initialize()
         {
@@ -33,7 +33,7 @@ namespace Tactics.Players.Services
                 return;
             }
             
-            _interactSubject.OnNext(new PlayerInteractionData(result, hitPoint, hitNormal));
+            _interactSubject.OnNext(new InteractionData(result, hitPoint, hitNormal));
         }
 
         public void Dispose()

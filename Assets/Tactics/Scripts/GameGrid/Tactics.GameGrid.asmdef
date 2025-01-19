@@ -5,7 +5,10 @@
         "Tactics.Graphs",
         "Tactics.GridView",
         "Zenject",
-        "Unity.TextMeshPro"
+        "Unity.TextMeshPro",
+        "Tactics.Raycasting",
+        "Tactics.Common",
+        "UniRx"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

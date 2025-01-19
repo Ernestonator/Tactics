@@ -60,7 +60,7 @@ namespace Tactics.Units.Sandbox.Services
 
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].Content.GameTileComponent.ChangeColor(Color.red);
+                nodes[i].Content.GameTileView.ChangeColor(Color.red);
             }
         }
         
@@ -76,7 +76,7 @@ namespace Tactics.Units.Sandbox.Services
 
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].Content.GameTileComponent.ResetColor();
+                nodes[i].Content.GameTileView.ResetColor();
             }
         }
         
@@ -101,7 +101,7 @@ namespace Tactics.Units.Sandbox.Services
 
             for (int i = 0; i < nodes.Count; i++)
             {
-                nodes[i].Content.GameTileComponent.ChangeColor(Color.green);
+                nodes[i].Content.GameTileView.ChangeColor(Color.green);
             }
         }
         
@@ -115,7 +115,7 @@ namespace Tactics.Units.Sandbox.Services
             
             for (int i = 0; i < _activePath.Count; i++)
             {
-                _activePath[i].Content.GameTileComponent.ResetColor();
+                _activePath[i].Content.GameTileView.ResetColor();
             }
         }
         

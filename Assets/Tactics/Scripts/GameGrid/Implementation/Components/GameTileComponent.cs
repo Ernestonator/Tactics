@@ -1,9 +1,10 @@
-﻿using TMPro;
+﻿using Tactics.GameGrid.Implementation.Services;
+using TMPro;
 using UnityEngine;
 
 namespace Tactics.GameGrid.Implementation.Components
 {
-    public class GameTileComponent : MonoBehaviour
+    public class GameTileComponent : MonoBehaviour, IGameTileView
     {
         [SerializeField] 
         private TMP_Text tileIndex;

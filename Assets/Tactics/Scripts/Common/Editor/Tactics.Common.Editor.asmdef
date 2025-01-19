@@ -1,15 +1,12 @@
 {
-    "name": "Tactics.GameGrid.Sandbox",
+    "name": "Tactics.Common.Editor",
     "rootNamespace": "",
     "references": [
-        "Zenject",
-        "Tactics.GameGrid",
-        "Tactics.GridView",
-        "Tactics.Graphs",
-        "UniRx",
-        "Tactics.Raycasting"
+        "Tactics.Common"
     ],
-    "includePlatforms": [],
+    "includePlatforms": [
+        "Editor"
+    ],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
     "overrideReferences": false,

@@ -8,6 +8,7 @@ namespace Tactics.GameGrid.Sandbox.Installers
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<DebugTileIndexes>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LogHoverInteractions>().AsSingle();
         }
     }
 }
