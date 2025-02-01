@@ -20,10 +20,10 @@ namespace Tactics.GameGrid.Implementation.Services
         public IObservable<InteractionData> OnTileHoverStart => _hoverStartSubject.AsObservable();
         public IObservable<InteractionData> OnTileHoverEnd => _hoverEndSubject.AsObservable();
         
-        // TODO revise this method as it produces too much hover starts and hovers doesn't end whenever switching between tiles
         public void Tick()
         {
-            if (!_rayCaster.TryCastRayFromCamera<InteractableTile>(1000, out var result, out var hitPoint, out var hitNormal))
+            var raycastHit = _rayCaster.TryCastRayFromCamera<InteractableTile>(1000, out var result, out var hitPoint, out var hitNormal);
+            if (raycastHit == false)
             {
                 if (_currentInteraction != null)
                 {
@@ -33,9 +33,14 @@ namespace Tactics.GameGrid.Implementation.Services
                 return;
             }
 
-            if (_currentInteraction != null && result.gameObject == _currentInteraction.Interactable.GameObject)
+            if (_currentInteraction != null)
             {
-                return;
+                if (result.GameObject.GetInstanceID() == _currentInteraction.Interactable.GameObject.GetInstanceID())
+                {
+                    return;
+                }
+
+                _hoverEndSubject.OnNext(_currentInteraction);
             }
 
             _currentInteraction = new InteractionData(result, hitPoint, hitNormal);
