@@ -9,7 +9,8 @@
         "UniRx",
         "Tactics.Units",
         "Tactics.Graphs",
-        "Tactics.GameGrid"
+        "Tactics.GameGrid",
+        "Tactics.GridView"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

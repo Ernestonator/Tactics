@@ -15,6 +15,7 @@ namespace Tactics.Players.Services
         private readonly Subject<InteractablePlayer> _playerSelectedSubject = new();
         
         private InteractablePlayer _currentlySelectedPlayer;
+        private InteractableTile _currentlySelectedTile;
         
         [Inject]
         private PlayerInteractions _playerInteractions;
@@ -25,7 +26,8 @@ namespace Tactics.Players.Services
         
         public void Initialize()
         {
-            _playerInteractions.OnPlayerInteract.Subscribe(OnPlayerInteract).AddTo(_subscriptions);
+            _playerInteractions.PlayerInteract.Subscribe(OnPlayerInteract).AddTo(_subscriptions);
+            _playerInteractions.TileInteract.Subscribe(OnTileInteract).AddTo(_subscriptions);
         }
         
         public void Dispose()
@@ -45,12 +47,18 @@ namespace Tactics.Players.Services
 
         public void DisplayMovementRange(IUnitMovement unitMovement)
         {
-            throw new System.NotImplementedException();
+            var tilesInRange = unitMovement.GetTilesInRange().ToIndexes();
+            // TODO configure colors
+            _gameGridHighlighter.RequestGridHighlight(tilesInRange, Color.blue);
         }
 
-        public void PerformMovement(IUnitMovement unitMovement)
+        public void PerformMovement(IUnitMovement unitMovement, Vector2Int target)
         {
-            throw new System.NotImplementedException();
+            unitMovement.TrySetLogicPosition(target);
+            var unitGameObject = _currentlySelectedPlayer.UnitFacade.UnitDataContainer.UnitGameObject;
+            unitGameObject.transform.SetParent(_currentlySelectedTile.Node.Content.TileView.TileGameObject.transform);
+            unitGameObject.transform.localPosition = Vector3.zero;
+            _gameGridHighlighter.RequestGridHighlightReset();
         }
 
         private void OnPlayerInteract(InteractionData interactionData)
@@ -60,10 +68,37 @@ namespace Tactics.Players.Services
                 _currentlySelectedPlayer = (InteractablePlayer)interactionData.Interactable;
                 _playerSelectedSubject.OnNext(_currentlySelectedPlayer);   
             }
+
+            DisplayMovementRange(_currentlySelectedPlayer.UnitFacade.UnitMovement);
+        }
+        
+        private void OnTileInteract(InteractionData interactionData)
+        {
+            if (_currentlySelectedPlayer == null)
+            {
+                return;
+            }
+
+            var tileInteraction = (InteractableTile)interactionData.Interactable;
+            _currentlySelectedTile = tileInteraction;
+            var unitMovement = _currentlySelectedPlayer.UnitFacade.UnitMovement;
+            var unitLastPosition = unitMovement.LastPosition;
+            var nodeContent = tileInteraction.Node.Content;
+            var tilePosition = new Vector2Int(nodeContent.XIndex, nodeContent.YIndex);
             
-            var tilesInRange = _currentlySelectedPlayer.UnitFacade.UnitMovement.GetTilesInRange().ToIndexes();
-            // TODO configure colors
-            _gameGridHighlighter.RequestGridHighlight(tilesInRange, Color.blue);
+            if (unitLastPosition == tilePosition)
+            {
+                Debug.LogWarning("Trying to move player to the same tile");
+                return;
+            }
+
+            if (unitMovement.IsTileReachable(tilePosition) == false)
+            {
+                Debug.LogWarning("Trying to move player to unreachable tile.");
+                return;
+            }
+
+            PerformMovement(unitMovement, tilePosition);
         }
     }
 }

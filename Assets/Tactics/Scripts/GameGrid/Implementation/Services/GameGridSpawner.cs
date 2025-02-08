@@ -14,8 +14,20 @@ namespace Tactics.GameGrid.Implementation.Services
 
         protected override void InitializeContent(Node<GameTile> node)
         {
+            InitializeNodeInteractableComponents(node);
             node.Content.GameTileView = node.Content.TileView.TileGameObject.GetComponent<IGameTileView>();
             node.Content.TileView.TileGameObject.name = $"TileView ({node.Content.XIndex}, {node.Content.YIndex})";
+        }
+
+        private void InitializeNodeInteractableComponents(Node<GameTile> node)
+        {
+            var interactableComponents =
+                node.Content.TileView.TileGameObject.GetComponentsInChildren<InteractableTile>();
+
+            foreach (var interactable in interactableComponents)
+            {
+                interactable.SetNode(node);
+            }
         }
     }
 }

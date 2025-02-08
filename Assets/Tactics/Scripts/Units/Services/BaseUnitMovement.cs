@@ -15,7 +15,9 @@ namespace Tactics.Units.Services
         
         private Vector2Int? _lastPosition;
         private List<Node<GameTile>> _currentlyCalculatedPath;
-        
+
+        public Vector2Int? LastPosition => _lastPosition;
+
         public BaseUnitMovement(Grid2D<GameTile> grid, MovementParameters movementParameters)
         {
             _grid = grid;
@@ -60,6 +62,25 @@ namespace Tactics.Units.Services
             
             var bfs = new BFS<GameTile>(_grid);
             return bfs.CalculateAllReachableTiles(_lastPosition.Value, _movementParameters.Range);
+        }
+
+        public bool IsTileReachable(Vector2Int position)
+        {
+            var tilesInRange = GetTilesInRange();
+            foreach (var tile in tilesInRange)
+            {
+                if (tile.Content.XIndex == position.x && tile.Content.YIndex == position.y)
+                {
+                    if (tile.Content.IsOccupied())
+                    {
+                        continue;
+                    }
+
+                    return true;
+                }
+            }
+            
+            return false;
         }
 
         [CanBeNull]
