@@ -4,7 +4,10 @@
     "references": [
         "Tactics.Units",
         "Tactics.GameGrid",
-        "Tactics.Common"
+        "Tactics.Common",
+        "Zenject",
+        "Tactics.Graphs",
+        "Tactics.GridView"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

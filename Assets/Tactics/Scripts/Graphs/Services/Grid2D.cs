@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Tactics.Graphs.Data.Models;
+using UnityEngine;
 
 namespace Tactics.Graphs.Services
 {
@@ -73,6 +74,11 @@ namespace Tactics.Graphs.Services
             }
         }
 
+        public bool TryFindNodeAt(Vector2Int position, out Node<TTileContent> node)
+        {
+            return TryFindNodeAt(position.x, position.y, out node);
+        }
+        
         public bool TryFindNodeAt(int x, int y, out Node<TTileContent> node)
         {
             return TryFindNodeAt(Graph, x, y, out node);
