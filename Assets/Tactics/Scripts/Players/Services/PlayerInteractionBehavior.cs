@@ -56,8 +56,7 @@ namespace Tactics.Players.Services
                 _playerSelectedSubject.OnNext(_currentlySelectedPlayer);   
             }
             
-            // TODO use facade for movement
-            // _currentlySelectedPlayer.UnitFacade
+            var tilesInRange = _currentlySelectedPlayer.UnitFacade.UnitMovement.GetTilesInRange();
         }
     }
 }

@@ -23,14 +23,14 @@ namespace Tactics.Units.Sandbox.Services
         [Inject(Id = UnitConstants.PlayerUnitFactoryID)]
         private BaseUnitFactory _factory;
         [Inject]
-        private GameGridSpawner _gameGridSpawner;
+        private IGameGridProvider _gameGridProvider;
 
         private List<Node<GameTile>> _activePath;
         
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
-            _gameGridSpawner.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
+            _gameGridProvider.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
             if (node.Content.IsOccupied())
             {
                 Debug.LogError($"Cannot spawn unit at {spawnPoint.x}, {spawnPoint.y}");

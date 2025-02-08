@@ -9,7 +9,7 @@ namespace Tactics.PlayerUnits.Services
     public class BaseUnitFacade : IDisposable
     {
         [Inject]
-        GameGridSpawner _gridSpawner;
+        private IGameGridProvider _gameGridProvider;
      
         public UnitDataContainer UnitDataContainer { get; private set; }   
         public IUnitMovement UnitMovement { get; private set; }
@@ -18,7 +18,7 @@ namespace Tactics.PlayerUnits.Services
         public virtual void Construct(UnitDataContainer unitDataContainer)
         {
             UnitDataContainer = unitDataContainer;
-            UnitMovement = new BaseUnitMovement(_gridSpawner.Grid, unitDataContainer.MovementParameters);
+            UnitMovement = new BaseUnitMovement(_gameGridProvider.Grid, unitDataContainer.MovementParameters);
         }
 
         public void Dispose()

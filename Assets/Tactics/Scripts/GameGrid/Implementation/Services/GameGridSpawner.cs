@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Tactics.GameGrid.Implementation.Services
 {
-    public class GameGridSpawner : GridSpawner<GameTile>
+    internal class GameGridSpawner : GridSpawner<GameTile>, IGameGridProvider
     {
         public GameGridSpawner(int gridSize, float tileSize, GameObject tilePrefab, Transform tilesRoot) : base(gridSize, tileSize, tilePrefab, tilesRoot)
         {

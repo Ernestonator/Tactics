@@ -6,7 +6,7 @@ namespace Tactics.GameGrid.Sandbox.Services
     public class DebugTileIndexes : IInitializable
     {
         [Inject]
-        GameGridSpawner _gameGridSpawner;
+        IGameGridProvider _gameGridProvider;
         
         public void Initialize()
         {
@@ -15,7 +15,7 @@ namespace Tactics.GameGrid.Sandbox.Services
 
         private void EnterDebugIndexes()
         {
-            var nodes = _gameGridSpawner.Grid.Graph.Nodes;
+            var nodes = _gameGridProvider.Grid.Graph.Nodes;
             for (int i = 0; i < nodes.Count; i++)
             {
                 var tileText = $"{nodes[i].Content.XIndex} : {nodes[i].Content.YIndex}";
