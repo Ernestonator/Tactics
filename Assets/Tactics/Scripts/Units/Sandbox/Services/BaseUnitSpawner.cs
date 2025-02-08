@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using JetBrains.Annotations;
 using Tactics.GameGrid.Data.Models;
+using Tactics.GameGrid.Implementation.Extensions;
 using Tactics.GameGrid.Implementation.Services;
 using Tactics.Graphs.Services;
 using Tactics.PlayerUnits.Services;
@@ -24,6 +26,8 @@ namespace Tactics.Units.Sandbox.Services
         private BaseUnitFactory _factory;
         [Inject]
         private IGameGridProvider _gameGridProvider;
+        [Inject]
+        private GameGridHighlighter _gameGridHighlighter;
 
         private List<Node<GameTile>> _activePath;
         
@@ -57,12 +61,8 @@ namespace Tactics.Units.Sandbox.Services
         public void SeeRangeOfLatestUnit()
         {
             var lastUnit = _units.Peek();
-            var nodes = lastUnit.UnitMovement.GetTilesInRange();
-
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                nodes[i].Content.GameTileView.ChangeColor(Color.red);
-            }
+            var nodes = lastUnit.UnitMovement.GetTilesInRange().ToIndexes();
+            _gameGridHighlighter.RequestGridHighlight(nodes, Color.red);
         }
         
         [ContextMenu(nameof(ResetRangeOfLatestUnit))]
@@ -73,12 +73,7 @@ namespace Tactics.Units.Sandbox.Services
                 return;
             }
             
-            var nodes = _activeUnit.UnitMovement.GetTilesInRange();
-
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                nodes[i].Content.GameTileView.ResetColor();
-            }
+            _gameGridHighlighter.RequestGridHighlightReset();
         }
         
         [ContextMenu(nameof(CalculatePathForLatestUnit))]
@@ -99,11 +94,8 @@ namespace Tactics.Units.Sandbox.Services
             }
 
             _activePath = nodes;
-
-            for (int i = 0; i < nodes.Count; i++)
-            {
-                nodes[i].Content.GameTileView.ChangeColor(Color.green);
-            }
+            var nodesIndexes = nodes.ToIndexes();
+            _gameGridHighlighter.RequestGridHighlight(nodesIndexes, Color.green);
         }
         
         [ContextMenu(nameof(ResetPathForLatestUnit))]
@@ -114,10 +106,7 @@ namespace Tactics.Units.Sandbox.Services
                 return;
             }
             
-            for (int i = 0; i < _activePath.Count; i++)
-            {
-                _activePath[i].Content.GameTileView.ResetColor();
-            }
+            _gameGridHighlighter.RequestGridHighlightReset();
         }
         
         [ContextMenu(nameof(PerformMovementToLatestPath))]

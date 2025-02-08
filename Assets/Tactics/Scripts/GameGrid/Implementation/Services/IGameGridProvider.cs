@@ -1,6 +1,5 @@
 ﻿using Tactics.GameGrid.Data.Models;
 using Tactics.Graphs.Services;
-using Zenject;
 
 namespace Tactics.GameGrid.Implementation.Services
 {

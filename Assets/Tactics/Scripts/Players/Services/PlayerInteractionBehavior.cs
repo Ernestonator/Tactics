@@ -1,20 +1,25 @@
 ﻿using System;
+using Tactics.GameGrid.Implementation.Extensions;
+using Tactics.GameGrid.Implementation.Services;
 using Tactics.Raycasting.Data.Models;
 using Tactics.Units.Services;
 using UniRx;
+using UnityEngine;
 using Zenject;
 
 namespace Tactics.Players.Services
 {
     public class PlayerInteractionBehavior : IPlayerInteractionBehavior, IInitializable, IDisposable
     {
-        private readonly CompositeDisposable _subscriptions = new CompositeDisposable();
+        private readonly CompositeDisposable _subscriptions = new();
         private readonly Subject<InteractablePlayer> _playerSelectedSubject = new();
         
         private InteractablePlayer _currentlySelectedPlayer;
         
         [Inject]
         private PlayerInteractions _playerInteractions;
+        [Inject]
+        private GameGridHighlighter _gameGridHighlighter;
         
         public IObservable<InteractablePlayer> OnPlayerSelected => _playerSelectedSubject.AsObservable();
         
@@ -56,7 +61,9 @@ namespace Tactics.Players.Services
                 _playerSelectedSubject.OnNext(_currentlySelectedPlayer);   
             }
             
-            var tilesInRange = _currentlySelectedPlayer.UnitFacade.UnitMovement.GetTilesInRange();
+            var tilesInRange = _currentlySelectedPlayer.UnitFacade.UnitMovement.GetTilesInRange().ToIndexes();
+            // TODO configure colors
+            _gameGridHighlighter.RequestGridHighlight(tilesInRange, Color.blue);
         }
     }
 }
