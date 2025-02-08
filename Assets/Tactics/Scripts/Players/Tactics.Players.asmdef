@@ -6,7 +6,8 @@
         "Zenject",
         "Tactics.InputSystem",
         "Unity.InputSystem",
-        "UniRx"
+        "UniRx",
+        "Tactics.Units"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

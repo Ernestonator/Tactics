@@ -4,6 +4,7 @@ using Tactics.GameGrid.Data.Models;
 using Tactics.GameGrid.Implementation.Services;
 using Tactics.Graphs.Services;
 using Tactics.PlayerUnits.Services;
+using Tactics.Units.Data;
 using Tactics.Units.Services;
 using UnityEngine;
 using Zenject;
@@ -19,7 +20,7 @@ namespace Tactics.Units.Sandbox.Services
         
         [CanBeNull] private BaseUnitFacade _activeUnit;
         
-        [Inject]
+        [Inject(Id = UnitConstants.PlayerUnitFactoryID)]
         private BaseUnitFactory _factory;
         [Inject]
         private GameGridSpawner _gameGridSpawner;

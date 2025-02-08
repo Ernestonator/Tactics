@@ -1,14 +1,10 @@
 {
-    "name": "Tactics.Units",
+    "name": "Tactics.LevelGeneration",
     "rootNamespace": "",
     "references": [
-        "UniTask",
-        "Tactics.Graphs",
+        "Tactics.Units",
         "Tactics.GameGrid",
-        "Tactics.GridView",
-        "Zenject",
-        "Tactics.Common",
-        "Tactics.Raycasting"
+        "Tactics.Common"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

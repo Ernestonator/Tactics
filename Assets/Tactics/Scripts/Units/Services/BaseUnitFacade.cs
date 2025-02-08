@@ -15,7 +15,7 @@ namespace Tactics.PlayerUnits.Services
         public IUnitMovement UnitMovement { get; private set; }
         
         [Inject]
-        public void Construct(UnitDataContainer unitDataContainer)
+        public virtual void Construct(UnitDataContainer unitDataContainer)
         {
             UnitDataContainer = unitDataContainer;
             UnitMovement = new BaseUnitMovement(_gridSpawner.Grid, unitDataContainer.MovementParameters);

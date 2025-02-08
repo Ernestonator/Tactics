@@ -838,7 +838,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   unitsRoot: {fileID: 1049877426}
-  unitDataPrefab: {fileID: 1470371086723667517, guid: 37bc9dbaf4d1acf4e83d592f62277fc6, type: 3}
+  playerUnitDataPrefab: {fileID: 0}
 --- !u!1 &1326198183
 GameObject:
   m_ObjectHideFlags: 0

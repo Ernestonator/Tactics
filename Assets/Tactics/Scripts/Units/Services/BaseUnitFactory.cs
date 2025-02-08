@@ -22,6 +22,12 @@ namespace Tactics.Units.Services
         {
             var dataContainer = _unitDataContainerFactory.Create(_parent);
             var unit = _container.Instantiate<BaseUnitFacade>(new [] {dataContainer});
+            var interactableElements = dataContainer.GetComponentsInChildren<IInteractableUnit>();
+            foreach (var interactableElement in interactableElements)
+            {
+                interactableElement.SetUnitFacade(unit);
+            }
+            
             return unit;
         }
     }
