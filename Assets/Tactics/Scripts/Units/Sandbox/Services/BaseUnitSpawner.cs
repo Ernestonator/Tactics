@@ -25,8 +25,8 @@ namespace Tactics.Units.Sandbox.Services
         [CanBeNull]
         private BaseUnitFacade _activeUnit;
 
-        [Inject]
-        private Dictionary<string, BaseUnitFactory> _factories;
+        [Inject(Id = UnitConstants.PlayerUnitFactoryID)]
+        private BaseUnitFactory _factory;
         [Inject]
         private GameGridHighlighter _gameGridHighlighter;
         [Inject]
@@ -43,7 +43,7 @@ namespace Tactics.Units.Sandbox.Services
                 return;
             }
 
-            var unit = _factories[UnitConstants.PlayerUnitFactoryID].Create();
+            var unit = _factory.Create();
             _units.Push(unit);
             unit.UnitMovement.TrySetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
             unit.UnitDataContainer.UnitGameObject.transform.SetParent(node.Content.TileView.TileGameObject.transform);

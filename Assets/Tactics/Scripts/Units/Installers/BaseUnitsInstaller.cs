@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Tactics.Units.Data;
+﻿using Tactics.Units.Data;
 using Tactics.Units.Services;
 using UnityEngine;
 using Zenject;
@@ -15,26 +14,22 @@ namespace Tactics.Units.Installers
         [SerializeField]
         private UnitDataContainer enemyUnitDataPrefab;
 
-        private readonly Dictionary<string, BaseUnitFactory> _factories = new();
-
         public override void InstallBindings()
         {
-            InstallFactoriesDictionary();
+            InstallFactories();
         }
 
-        private void InstallFactoriesDictionary()
+        private void InstallFactories()
         {
-            CreateAndAddFactory(playerUnitDataPrefab, UnitConstants.PlayerUnitFactoryID);
-            CreateAndAddFactory(enemyUnitDataPrefab, UnitConstants.EnemyUnitFactoryID);
-
-            Container.Bind<Dictionary<string, BaseUnitFactory>>().FromInstance(_factories).AsSingle();
+            InstallFactory(playerUnitDataPrefab, UnitConstants.PlayerUnitFactoryID);
+            InstallFactory(enemyUnitDataPrefab, UnitConstants.EnemyUnitFactoryID);
         }
 
-        private void CreateAndAddFactory(UnitDataContainer unitPrefab, string factoryID)
+        private void InstallFactory(UnitDataContainer unitPrefab, string factoryID)
         {
             var factory = new BaseUnitFactory(unitPrefab, unitsRoot);
             Container.Inject(factory);
-            _factories[factoryID] = factory;
+            Container.Bind<BaseUnitFactory>().WithId(factoryID).FromInstance(factory).AsCached();
         }
     }
 }
