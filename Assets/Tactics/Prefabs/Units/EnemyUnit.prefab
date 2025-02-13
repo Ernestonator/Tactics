@@ -169,6 +169,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b974b907586b482fbc59c6828b9b0e6f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  <HealthParameters>k__BackingField:
+    <StartingHealth>k__BackingField: 2
   <MovementParameters>k__BackingField:
     <Range>k__BackingField: 5
   <UnitGameObject>k__BackingField: {fileID: 8172253875252753177}

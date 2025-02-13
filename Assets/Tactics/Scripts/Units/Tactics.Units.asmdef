@@ -8,7 +8,8 @@
     "Tactics.GridView",
     "Zenject",
     "Tactics.Common",
-    "Tactics.Raycasting"
+    "Tactics.Raycasting",
+    "Tactics.HealthSystem"
   ],
   "includePlatforms": [],
   "excludePlatforms": [],
