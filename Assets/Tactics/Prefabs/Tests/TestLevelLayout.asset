@@ -19,5 +19,9 @@ MonoBehaviour:
     <UnitPosition>k__BackingField: {x: 5, y: 6}
   - <UnitType>k__BackingField: 0
     <UnitPosition>k__BackingField: {x: 7, y: 8}
-  - <UnitType>k__BackingField: 0
+  - <UnitType>k__BackingField: 1
     <UnitPosition>k__BackingField: {x: 8, y: 7}
+  - <UnitType>k__BackingField: 1
+    <UnitPosition>k__BackingField: {x: 4, y: 1}
+  - <UnitType>k__BackingField: 1
+    <UnitPosition>k__BackingField: {x: 1, y: 9}

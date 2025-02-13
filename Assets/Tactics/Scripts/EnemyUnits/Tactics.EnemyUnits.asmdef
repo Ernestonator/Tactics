@@ -1,0 +1,17 @@
+{
+    "name": "Tactics.EnemyUnits",
+    "rootNamespace": "",
+    "references": [
+        "Tactics.Units",
+        "Tactics.Raycasting"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

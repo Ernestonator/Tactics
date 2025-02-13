@@ -12,6 +12,7 @@ namespace Tactics.Units.Services
         [Inject]
         private DiContainer _container;
 
+        [Inject]
         public BaseUnitFactory(UnitDataContainer prefab, Transform parent)
         {
             _unitDataContainerFactory = new UnitDataContainerFactory(prefab);
