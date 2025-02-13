@@ -1,17 +1,17 @@
 {
-    "name": "Tactics.GridView",
-    "rootNamespace": "",
-    "references": [
-        "Zenject",
-        "Tactics.Graphs"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.GridView",
+  "rootNamespace": "",
+  "references": [
+    "Zenject",
+    "Tactics.Graphs"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

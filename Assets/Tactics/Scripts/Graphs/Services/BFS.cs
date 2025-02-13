@@ -20,11 +20,11 @@ namespace Tactics.Graphs.Services
             {
                 throw new Exception($"{nameof(BFS<TTileContent>)} shouldn't operate on invalid node x, y.");
             }
-            
+
             var visitedTiles = new List<Node<TTileContent>>();
             visitedTiles.Add(startingNode);
 
-            Queue<(Vector2Int, int)> queue = new Queue<(Vector2Int, int)>();
+            var queue = new Queue<(Vector2Int, int)>();
             queue.Enqueue((startPoint, range));
 
             while (queue.Count > 0)
@@ -41,7 +41,7 @@ namespace Tactics.Graphs.Services
                     throw new Exception($"{nameof(BFS<TTileContent>)} shouldn't operate on invalid node x, y.");
                 }
 
-                for (int i = 0; i < node.Connections.Count; i++)
+                for (var i = 0; i < node.Connections.Count; i++)
                 {
                     var neighbourNode = node.Connections[i];
                     var (nx, ny) = (neighbourNode.Content.XIndex, neighbourNode.Content.YIndex);
@@ -49,6 +49,7 @@ namespace Tactics.Graphs.Services
                     var tileInRange = nx >= 0 && nx < _grid.Width && ny >= 0 && ny < _grid.Height;
                     var tileNotOccupied = !neighbourNode.Content.IsOccupied();
                     var tileNotVisited = !visitedTiles.Contains(neighbourNode);
+
                     if (tileInRange && tileNotOccupied && tileNotVisited)
                     {
                         visitedTiles.Add(neighbourNode);
@@ -56,11 +57,13 @@ namespace Tactics.Graphs.Services
                     }
                 }
             }
-            
+
             return visitedTiles;
         }
 
-        public bool TryCalculateShortestPath(Vector2Int startPoint, Vector2Int targetPoint, int range,
+        public bool TryCalculateShortestPath(Vector2Int startPoint,
+            Vector2Int targetPoint,
+            int range,
             out List<Node<TTileContent>> path)
         {
             if (!_grid.TryFindNodeAt(startPoint.x, startPoint.y, out var startNode))
@@ -69,48 +72,51 @@ namespace Tactics.Graphs.Services
                 path = null;
                 return false;
             }
-            
+
             if (!_grid.TryFindNodeAt(targetPoint.x, targetPoint.y, out var endNode))
             {
                 Debug.LogError("Can't operate outside of board.");
                 path = null;
                 return false;
             }
-            
-            path = new();
+
+            path = new List<Node<TTileContent>>();
 
             if (startPoint.x == targetPoint.x && startPoint.y == targetPoint.y)
             {
                 path.Add(startNode);
                 return true;
             }
-            
+
             var visitedTiles = new List<Node<TTileContent>>();
             visitedTiles.Add(startNode);
-            
-           var queue = new Queue<(Vector2Int, List<Node<TTileContent>>)>();
-            queue.Enqueue((startPoint, new () { startNode }));
+
+            var queue = new Queue<(Vector2Int, List<Node<TTileContent>>)>();
+
+            queue.Enqueue((startPoint, new List<Node<TTileContent>>
+                { startNode, }));
 
             while (queue.Count > 0)
             {
                 var (currentPoint, currentPath) = queue.Dequeue();
-                
+
                 if (!_grid.TryFindNodeAt(currentPoint.x, currentPoint.y, out var node))
                 {
                     throw new Exception($"{nameof(BFS<TTileContent>)} shouldn't operate on invalid node x, y.");
                 }
 
-                for (int i = 0; i < node.Connections.Count; i++)
+                for (var i = 0; i < node.Connections.Count; i++)
                 {
                     var neighbourNode = node.Connections[i];
                     var (nx, ny) = (neighbourNode.Content.XIndex, neighbourNode.Content.YIndex);
-                    
+
                     var tileInRange = nx >= 0 && nx < _grid.Width && ny >= 0 && ny < _grid.Height;
                     var tileNotOccupied = !neighbourNode.Content.IsOccupied();
                     var tileNotVisited = !visitedTiles.Contains(neighbourNode);
+
                     if (tileInRange && tileNotOccupied && tileNotVisited)
                     {
-                        var newPath = new List<Node<TTileContent>>(currentPath) { neighbourNode };
+                        var newPath = new List<Node<TTileContent>>(currentPath) { neighbourNode, };
 
                         if ((nx, ny) == (endNode.Content.XIndex, endNode.Content.YIndex))
                         {
@@ -119,12 +125,10 @@ namespace Tactics.Graphs.Services
                                 path = newPath;
                                 return true;
                             }
-                            else
-                            {
-                                return false; 
-                            }
+
+                            return false;
                         }
-                        
+
                         visitedTiles.Add(neighbourNode);
                         queue.Enqueue((new Vector2Int(nx, ny), newPath));
                     }

@@ -6,10 +6,9 @@ namespace Tactics.Raycasting.Services
     {
         private readonly Camera _camera = Camera.main;
 
-        public bool TryCastRayFromCamera<T>(
-            float distance,
+        public bool TryCastRayFromCamera<T>(float distance,
             out T castResult,
-            out Vector3 hitPoint, 
+            out Vector3 hitPoint,
             out Vector3 hitNormal) where T : IInteractable
         {
             hitPoint = new Vector3();
@@ -17,14 +16,16 @@ namespace Tactics.Raycasting.Services
 
             var mousePosition = Input.mousePosition;
             var ray = _camera.ScreenPointToRay(mousePosition);
-            
-            if (Physics.Raycast(ray, out RaycastHit hit, distance))
+
+            if (Physics.Raycast(ray, out var hit, distance))
             {
                 castResult = hit.collider.GetComponentInChildren<T>();
+
                 if (castResult == null)
                 {
                     return false;
                 }
+
                 hitPoint = hit.point;
                 hitNormal = hit.normal;
                 return true;

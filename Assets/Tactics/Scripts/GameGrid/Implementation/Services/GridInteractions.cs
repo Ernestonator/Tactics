@@ -11,25 +11,27 @@ namespace Tactics.GameGrid.Implementation.Services
         private readonly CompositeDisposable _subscriptions = new();
         private readonly Subject<InteractionData> _hoverStartSubject = new();
         private readonly Subject<InteractionData> _hoverEndSubject = new();
-        
+
         private InteractionData _currentInteraction;
-        
+
         [Inject]
         private RayCaster _rayCaster;
-        
+
         public IObservable<InteractionData> OnTileHoverStart => _hoverStartSubject.AsObservable();
         public IObservable<InteractionData> OnTileHoverEnd => _hoverEndSubject.AsObservable();
-        
+
         public void Tick()
         {
             var raycastHit = _rayCaster.TryCastRayFromCamera<InteractableTile>(1000, out var result, out var hitPoint, out var hitNormal);
+
             if (raycastHit == false)
             {
                 if (_currentInteraction != null)
                 {
                     _hoverEndSubject.OnNext(_currentInteraction);
-                    _currentInteraction = null;   
+                    _currentInteraction = null;
                 }
+
                 return;
             }
 

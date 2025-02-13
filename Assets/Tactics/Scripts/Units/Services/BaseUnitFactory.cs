@@ -8,26 +8,27 @@ namespace Tactics.Units.Services
     {
         private readonly UnitDataContainerFactory _unitDataContainerFactory;
         private readonly Transform _parent;
-        
+
         [Inject]
-        DiContainer _container;
+        private DiContainer _container;
 
         public BaseUnitFactory(UnitDataContainer prefab, Transform parent)
         {
             _unitDataContainerFactory = new UnitDataContainerFactory(prefab);
             _parent = parent;
         }
-        
+
         public BaseUnitFacade Create()
         {
             var dataContainer = _unitDataContainerFactory.Create(_parent);
-            var unit = _container.Instantiate<BaseUnitFacade>(new [] {dataContainer});
+            var unit = _container.Instantiate<BaseUnitFacade>(new[] { dataContainer, });
             var interactableElements = dataContainer.GetComponentsInChildren<IInteractableUnit>();
+
             foreach (var interactableElement in interactableElements)
             {
                 interactableElement.SetUnitFacade(unit);
             }
-            
+
             return unit;
         }
     }

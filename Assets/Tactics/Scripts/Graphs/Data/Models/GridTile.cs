@@ -4,7 +4,7 @@
     {
         public int XIndex { get; set; }
         public int YIndex { get; set; }
-        
+
         public virtual bool IsOccupied()
         {
             return false;

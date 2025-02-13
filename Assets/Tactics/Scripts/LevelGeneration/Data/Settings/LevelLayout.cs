@@ -9,8 +9,9 @@ namespace Tactics.LevelGeneration.Data.Settings
         fileName = nameof(LevelLayout))]
     public class LevelLayout : ScriptableObject
     {
-        [SerializeField] private List<UnitStartingPosition> _unitStartingPositions;
-        
+        [SerializeField]
+        private List<UnitStartingPosition> _unitStartingPositions;
+
         internal IReadOnlyList<UnitStartingPosition> UnitStartingPositions => _unitStartingPositions;
     }
 }

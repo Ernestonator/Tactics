@@ -6,38 +6,47 @@ namespace Tactics.Graphs.Services
 {
     public class Grid2D<TTileContent> where TTileContent : GridTile, new()
     {
-        private readonly int _height;
-        private readonly int _width;
-        
         public Graph<TTileContent> Graph { get; private set; }
-        
-        public int Height => _height;
-        public int Width => _width;
-        
+
+        public int Height { get; }
+        public int Width { get; }
+
         public Grid2D(int height, int width)
         {
-            _height = height;
-            _width = width;
+            Height = height;
+            Width = width;
 
             InitializeGraph();
+        }
+
+        public bool TryFindNodeAt(Vector2Int position, out Node<TTileContent> node)
+        {
+            return TryFindNodeAt(position.x, position.y, out node);
+        }
+
+        public bool TryFindNodeAt(int x, int y, out Node<TTileContent> node)
+        {
+            return TryFindNodeAt(Graph, x, y, out node);
         }
 
         private void InitializeGraph()
         {
             var nodes = new List<Node<TTileContent>>();
-            for (int i = 0; i < _height; i++)
+
+            for (var i = 0; i < Height; i++)
             {
-                for (int j = 0; j < _width; j++)
+                for (var j = 0; j < Width; j++)
                 {
                     var node = new Node<TTileContent>
                     {
-                        Connections = new (),
+                        Connections = new List<Node<TTileContent>>(),
                         Content = new TTileContent
                         {
                             XIndex = i,
                             YIndex = j,
-                        }
+                        },
                     };
+
                     nodes.Add(node);
                 }
             }
@@ -49,7 +58,7 @@ namespace Tactics.Graphs.Services
 
         private void InitializeNeighbours(Graph<TTileContent> graph)
         {
-            for (int i = 0; i < graph.Nodes.Count; i++)
+            for (var i = 0; i < graph.Nodes.Count; i++)
             {
                 var node = graph.Nodes[i];
                 var x = node.Content.XIndex;
@@ -59,14 +68,17 @@ namespace Tactics.Graphs.Services
                 {
                     node.Connections.Add(leftNeighbour);
                 }
+
                 if (TryFindNodeAt(graph, x + 1, y, out var rightNeighbour))
                 {
                     node.Connections.Add(rightNeighbour);
                 }
+
                 if (TryFindNodeAt(graph, x, y + 1, out var topNeighbour))
                 {
                     node.Connections.Add(topNeighbour);
                 }
+
                 if (TryFindNodeAt(graph, x, y - 1, out var bottomNeighbour))
                 {
                     node.Connections.Add(bottomNeighbour);
@@ -74,21 +86,15 @@ namespace Tactics.Graphs.Services
             }
         }
 
-        public bool TryFindNodeAt(Vector2Int position, out Node<TTileContent> node)
+        private bool TryFindNodeAt(Graph<TTileContent> graph,
+            int x,
+            int y,
+            out Node<TTileContent> node)
         {
-            return TryFindNodeAt(position.x, position.y, out node);
-        }
-        
-        public bool TryFindNodeAt(int x, int y, out Node<TTileContent> node)
-        {
-            return TryFindNodeAt(Graph, x, y, out node);
-        }
-
-        private bool TryFindNodeAt(Graph<TTileContent> graph, int x, int y, out Node<TTileContent> node)
-        {
-            for (int i = 0; i < graph.Nodes.Count; i++)
+            for (var i = 0; i < graph.Nodes.Count; i++)
             {
                 node = graph.Nodes[i];
+
                 if (node.Content.XIndex == x && node.Content.YIndex == y)
                 {
                     return true;

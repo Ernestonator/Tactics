@@ -8,7 +8,7 @@ namespace Tactics.Raycasting.Sandbox.Installers
     {
         [SerializeField]
         private TestInteractionService testInteractionService;
-        
+
         public override void InstallBindings()
         {
             Container.BindInterfacesAndSelfTo<TestInteractionService>().FromComponentInNewPrefab(testInteractionService).AsSingle();

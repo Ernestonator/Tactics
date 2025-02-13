@@ -1,24 +1,24 @@
 {
-    "name": "Tactics.Players",
-    "rootNamespace": "",
-    "references": [
-        "Tactics.Raycasting",
-        "Zenject",
-        "Tactics.InputSystem",
-        "Unity.InputSystem",
-        "UniRx",
-        "Tactics.Units",
-        "Tactics.Graphs",
-        "Tactics.GameGrid",
-        "Tactics.GridView"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.Players",
+  "rootNamespace": "",
+  "references": [
+    "Tactics.Raycasting",
+    "Zenject",
+    "Tactics.InputSystem",
+    "Unity.InputSystem",
+    "UniRx",
+    "Tactics.Units",
+    "Tactics.Graphs",
+    "Tactics.GameGrid",
+    "Tactics.GridView"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

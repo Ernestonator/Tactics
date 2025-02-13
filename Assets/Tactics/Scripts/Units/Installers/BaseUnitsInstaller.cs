@@ -7,13 +7,15 @@ namespace Tactics.Units.Installers
 {
     public class BaseUnitsInstaller : MonoInstaller
     {
-        [SerializeField] private Transform unitsRoot;
-        [SerializeField] private UnitDataContainer playerUnitDataPrefab;
+        [SerializeField]
+        private Transform unitsRoot;
+        [SerializeField]
+        private UnitDataContainer playerUnitDataPrefab;
 
         public override void InstallBindings()
         {
             var factory = new BaseUnitFactory(playerUnitDataPrefab, unitsRoot);
-            Container.Inject(factory); 
+            Container.Inject(factory);
             Container.Bind<BaseUnitFactory>().WithId(UnitConstants.PlayerUnitFactoryID).FromInstance(factory).AsSingle();
         }
     }

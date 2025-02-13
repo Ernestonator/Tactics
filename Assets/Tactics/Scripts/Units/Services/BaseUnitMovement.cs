@@ -12,7 +12,7 @@ namespace Tactics.Units.Services
     {
         private readonly Grid2D<GameTile> _grid;
         private readonly MovementParameters _movementParameters;
-        
+
         private Vector2Int? _lastPosition;
         private List<Node<GameTile>> _currentlyCalculatedPath;
 
@@ -35,18 +35,18 @@ namespace Tactics.Units.Services
             {
                 return false;
             }
-            
+
             if (_lastPosition.HasValue)
             {
                 if (!_grid.TryFindNodeAt(_lastPosition.Value.x, _lastPosition.Value.y, out var lastNode))
                 {
                     Debug.LogError($"Could not find last node at {position}");
                     return false;
-                } 
-                
+                }
+
                 lastNode.Content.SetOccupied(false);
             }
-            
+
             _lastPosition = position;
             node.Content.SetOccupied(true);
             return true;
@@ -59,7 +59,7 @@ namespace Tactics.Units.Services
                 Debug.LogError("Can't get tiles in range with no last position set.");
                 return null;
             }
-            
+
             var bfs = new BFS<GameTile>(_grid);
             return bfs.CalculateAllReachableTiles(_lastPosition.Value, _movementParameters.Range);
         }
@@ -67,6 +67,7 @@ namespace Tactics.Units.Services
         public bool IsTileReachable(Vector2Int position)
         {
             var tilesInRange = GetTilesInRange();
+
             foreach (var tile in tilesInRange)
             {
                 if (tile.Content.XIndex == position.x && tile.Content.YIndex == position.y)
@@ -79,7 +80,7 @@ namespace Tactics.Units.Services
                     return true;
                 }
             }
-            
+
             return false;
         }
 
@@ -91,12 +92,14 @@ namespace Tactics.Units.Services
                 Debug.LogError("Can't calculate path with no last position set.");
                 return null;
             }
-            
+
             var bfs = new BFS<GameTile>(_grid);
+
             if (!bfs.TryCalculateShortestPath(_lastPosition.Value, target, _movementParameters.Range, out var path))
             {
                 return null;
             }
+
             return path;
         }
 
@@ -106,7 +109,7 @@ namespace Tactics.Units.Services
             {
                 Debug.LogError("No set action to perform.");
             }
-            
+
             // TODO perform animation
             _currentlyCalculatedPath = null;
             return UniTask.CompletedTask;

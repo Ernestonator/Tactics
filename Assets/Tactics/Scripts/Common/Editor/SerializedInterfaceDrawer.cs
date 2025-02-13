@@ -10,38 +10,6 @@ namespace Tactics.Common.Editor
     [CustomPropertyDrawer(typeof(SerializedInterface<>))]
     public class SerializedInterfaceDrawer : PropertyDrawer
     {
-        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
-        {
-            EditorGUI.BeginProperty(position, label, property);
-
-            EditorGUI.BeginChangeCheck();
-
-            var assignedObjectProperty = property.FindPropertyRelative("assignedObject");
-
-            if (EditorGUIUtility.wideMode)
-            {
-                position = EditorGUI.PrefixLabel(position, label);
-                assignedObjectProperty.objectReferenceValue = EditorGUI.ObjectField(position, GUIContent.none,
-                    assignedObjectProperty.objectReferenceValue, typeof(Object), true);
-            }
-            else
-            {
-                EditorGUILayout.BeginHorizontal();
-                EditorGUILayout.PrefixLabel(label);
-                assignedObjectProperty.objectReferenceValue = EditorGUILayout.ObjectField(assignedObjectProperty.objectReferenceValue, 
-                    typeof(Object), true);
-                EditorGUILayout.EndHorizontal();
-            }
-
-            if (EditorGUI.EndChangeCheck())
-            {
-                property.serializedObject.ApplyModifiedProperties();
-                ValidateAssignment(property);
-            }
-
-            EditorGUI.EndProperty();
-        }
-
         public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
         {
             return EditorGUI.GetPropertyHeight(property.FindPropertyRelative("assignedObject"), label);
@@ -55,7 +23,7 @@ namespace Tactics.Common.Editor
             if (assignedObject != null)
             {
                 var interfaceType = GetInterfaceType();
-                
+
                 if (assignedObject is MonoBehaviour monoBehaviour && !IsInterfaceImplemented(monoBehaviour, interfaceType))
                 {
                     ResetAssignment(property, assignedObject, interfaceType, assignedObjectProperty);
@@ -73,7 +41,10 @@ namespace Tactics.Common.Editor
             }
         }
 
-        private void ResetAssignment(SerializedProperty property, Object assignedObject, Type interfaceType, SerializedProperty assignedObjectProperty)
+        private void ResetAssignment(SerializedProperty property,
+            Object assignedObject,
+            Type interfaceType,
+            SerializedProperty assignedObjectProperty)
         {
             Debug.LogWarning($"Assigned object '{assignedObject.name}' does not implement the required interface '{interfaceType.Name}'.");
             assignedObjectProperty.objectReferenceValue = null;
@@ -90,11 +61,46 @@ namespace Tactics.Common.Editor
         {
             return monoBehaviour.GetType().GetInterfaces().Contains(interfaceType);
         }
-        
+
         private bool TryGetComponent(GameObject gameObject, Type interfaceType, out Object result)
         {
             result = gameObject.GetComponent(interfaceType);
             return result != null;
+        }
+
+        public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
+        {
+            EditorGUI.BeginProperty(position, label, property);
+
+            EditorGUI.BeginChangeCheck();
+
+            var assignedObjectProperty = property.FindPropertyRelative("assignedObject");
+
+            if (EditorGUIUtility.wideMode)
+            {
+                position = EditorGUI.PrefixLabel(position, label);
+
+                assignedObjectProperty.objectReferenceValue = EditorGUI.ObjectField(position, GUIContent.none,
+                    assignedObjectProperty.objectReferenceValue, typeof(Object), true);
+            }
+            else
+            {
+                EditorGUILayout.BeginHorizontal();
+                EditorGUILayout.PrefixLabel(label);
+
+                assignedObjectProperty.objectReferenceValue = EditorGUILayout.ObjectField(assignedObjectProperty.objectReferenceValue,
+                    typeof(Object), true);
+
+                EditorGUILayout.EndHorizontal();
+            }
+
+            if (EditorGUI.EndChangeCheck())
+            {
+                property.serializedObject.ApplyModifiedProperties();
+                ValidateAssignment(property);
+            }
+
+            EditorGUI.EndProperty();
         }
     }
 }

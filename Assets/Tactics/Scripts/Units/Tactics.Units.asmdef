@@ -1,22 +1,22 @@
 {
-    "name": "Tactics.Units",
-    "rootNamespace": "",
-    "references": [
-        "UniTask",
-        "Tactics.Graphs",
-        "Tactics.GameGrid",
-        "Tactics.GridView",
-        "Zenject",
-        "Tactics.Common",
-        "Tactics.Raycasting"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.Units",
+  "rootNamespace": "",
+  "references": [
+    "UniTask",
+    "Tactics.Graphs",
+    "Tactics.GameGrid",
+    "Tactics.GridView",
+    "Zenject",
+    "Tactics.Common",
+    "Tactics.Raycasting"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

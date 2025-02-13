@@ -6,13 +6,13 @@ namespace Tactics.GameGrid.Implementation.Components
 {
     public class GameTileComponent : MonoBehaviour, IGameTileView
     {
-        [SerializeField] 
+        [SerializeField]
         private TMP_Text tileIndex;
         [SerializeField]
         private MeshRenderer _meshRenderer;
 
-        Color _defaultColor;
-        
+        private Color _defaultColor;
+
         private void Awake()
         {
             _defaultColor = _meshRenderer.material.color;

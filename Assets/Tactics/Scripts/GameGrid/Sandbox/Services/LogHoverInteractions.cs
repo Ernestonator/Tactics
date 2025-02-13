@@ -10,16 +10,16 @@ namespace Tactics.GameGrid.Sandbox.Services
     public class LogHoverInteractions : IInitializable, IDisposable
     {
         private readonly CompositeDisposable _compositeDisposable = new();
-        
+
         [Inject]
-        GridInteractions _gridInteractions;
-        
+        private GridInteractions _gridInteractions;
+
         public void Initialize()
         {
             _gridInteractions.OnTileHoverStart.Subscribe(OnHoverStart).AddTo(_compositeDisposable);
             _gridInteractions.OnTileHoverEnd.Subscribe(OnHoverEnd).AddTo(_compositeDisposable);
         }
-        
+
         public void Dispose()
         {
             _compositeDisposable.Dispose();

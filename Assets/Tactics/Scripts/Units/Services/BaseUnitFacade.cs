@@ -10,20 +10,20 @@ namespace Tactics.PlayerUnits.Services
     {
         [Inject]
         private IGameGridProvider _gameGridProvider;
-     
-        public UnitDataContainer UnitDataContainer { get; private set; }   
+
+        public UnitDataContainer UnitDataContainer { get; private set; }
         public IUnitMovement UnitMovement { get; private set; }
-        
+
+        public void Dispose()
+        {
+            Object.Destroy(UnitDataContainer.UnitGameObject);
+        }
+
         [Inject]
         public virtual void Construct(UnitDataContainer unitDataContainer)
         {
             UnitDataContainer = unitDataContainer;
             UnitMovement = new BaseUnitMovement(_gameGridProvider.Grid, unitDataContainer.MovementParameters);
-        }
-
-        public void Dispose()
-        {
-            Object.Destroy(UnitDataContainer.UnitGameObject);
         }
     }
 }

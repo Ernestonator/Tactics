@@ -1,21 +1,21 @@
 {
-    "name": "Tactics.LevelGeneration",
-    "rootNamespace": "",
-    "references": [
-        "Tactics.Units",
-        "Tactics.GameGrid",
-        "Tactics.Common",
-        "Zenject",
-        "Tactics.Graphs",
-        "Tactics.GridView"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.LevelGeneration",
+  "rootNamespace": "",
+  "references": [
+    "Tactics.Units",
+    "Tactics.GameGrid",
+    "Tactics.Common",
+    "Zenject",
+    "Tactics.Graphs",
+    "Tactics.GridView"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

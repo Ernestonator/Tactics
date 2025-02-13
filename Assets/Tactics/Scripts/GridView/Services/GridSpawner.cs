@@ -11,12 +11,13 @@ namespace Tactics.GridView.Services
         private readonly float _tileSize;
         private readonly GameObject _tilePrefab;
         private readonly Transform _tilesRoot;
-        
-        private Grid2D<TTileData> _grid2D;
 
-        public Grid2D<TTileData> Grid => _grid2D;
+        public Grid2D<TTileData> Grid { get; private set; }
 
-        protected GridSpawner(int gridSize, float tileSize, GameObject tilePrefab, Transform tilesRoot)
+        protected GridSpawner(int gridSize,
+            float tileSize,
+            GameObject tilePrefab,
+            Transform tilesRoot)
         {
             _gridSize = gridSize;
             _tileSize = tileSize;
@@ -24,30 +25,33 @@ namespace Tactics.GridView.Services
             _tilesRoot = tilesRoot;
         }
 
+        protected abstract void InitializeContent(Node<TTileData> node);
+
         public void Initialize()
         {
-            _grid2D = new Grid2D<TTileData>(_gridSize, _gridSize);
+            Grid = new Grid2D<TTileData>(_gridSize, _gridSize);
             SpawnTiles();
         }
 
         private void SpawnTiles()
         {
             var gridCenter = new Vector2(_gridSize / 2f, _gridSize / 2f);
-            for (int i = 0; i < _grid2D.Graph.Nodes.Count; i++)
+
+            for (var i = 0; i < Grid.Graph.Nodes.Count; i++)
             {
                 var tile = Object.Instantiate(_tilePrefab, _tilesRoot);
-                var node = _grid2D.Graph.Nodes[i];
-                node.Content.TileView = new TileView()
+                var node = Grid.Graph.Nodes[i];
+
+                node.Content.TileView = new TileView
                 {
-                    TileGameObject = tile
+                    TileGameObject = tile,
                 };
+
                 InitializeContent(node);
                 var xPos = node.Content.XIndex * _tileSize - gridCenter.x;
                 var zPos = node.Content.YIndex * _tileSize - gridCenter.y;
-                tile.transform.position = new Vector3(xPos,tile.transform.position.y, zPos);
+                tile.transform.position = new Vector3(xPos, tile.transform.position.y, zPos);
             }
         }
-
-        protected abstract void InitializeContent(Node<TTileData> node);
     }
 }

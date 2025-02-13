@@ -7,12 +7,13 @@ namespace Tactics.LevelGeneration.Implementation.Installers
 {
     public class LevelGenerationInstaller : MonoInstaller
     {
-        [SerializeField] private LevelLayout _levelLayout;
-        
+        [SerializeField]
+        private LevelLayout _levelLayout;
+
         public override void InstallBindings()
         {
-            Container.BindInterfacesAndSelfTo<UnitFactoriesMap>().AsSingle();    
-            Container.BindInterfacesAndSelfTo<LevelLayoutSpawner>().AsSingle().WithArguments(_levelLayout);    
-        }   
+            Container.BindInterfacesAndSelfTo<UnitFactoriesMap>().AsSingle();
+            Container.BindInterfacesAndSelfTo<LevelLayoutSpawner>().AsSingle().WithArguments(_levelLayout);
+        }
     }
 }

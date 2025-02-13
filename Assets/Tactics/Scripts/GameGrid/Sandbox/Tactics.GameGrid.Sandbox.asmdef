@@ -1,21 +1,21 @@
 {
-    "name": "Tactics.GameGrid.Sandbox",
-    "rootNamespace": "",
-    "references": [
-        "Zenject",
-        "Tactics.GameGrid",
-        "Tactics.GridView",
-        "Tactics.Graphs",
-        "UniRx",
-        "Tactics.Raycasting"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.GameGrid.Sandbox",
+  "rootNamespace": "",
+  "references": [
+    "Zenject",
+    "Tactics.GameGrid",
+    "Tactics.GridView",
+    "Tactics.Graphs",
+    "UniRx",
+    "Tactics.Raycasting"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }

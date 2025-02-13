@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using JetBrains.Annotations;
 using Tactics.GameGrid.Data.Models;
 using Tactics.GameGrid.Implementation.Extensions;
@@ -15,32 +14,35 @@ namespace Tactics.Units.Sandbox.Services
 {
     public class BaseUnitSpawner : MonoBehaviour
     {
+        [SerializeField]
+        private Vector2Int spawnPoint;
+        [SerializeField]
+        private Vector2Int targetPoint;
         private readonly Stack<BaseUnitFacade> _units = new();
-        
-        [SerializeField] private Vector2Int spawnPoint;
-        [SerializeField] private Vector2Int targetPoint;
-        
-        [CanBeNull] private BaseUnitFacade _activeUnit;
-        
+
+        private List<Node<GameTile>> _activePath;
+
+        [CanBeNull]
+        private BaseUnitFacade _activeUnit;
+
         [Inject(Id = UnitConstants.PlayerUnitFactoryID)]
         private BaseUnitFactory _factory;
         [Inject]
-        private IGameGridProvider _gameGridProvider;
-        [Inject]
         private GameGridHighlighter _gameGridHighlighter;
+        [Inject]
+        private IGameGridProvider _gameGridProvider;
 
-        private List<Node<GameTile>> _activePath;
-        
         [ContextMenu(nameof(Spawn))]
         public void Spawn()
         {
             _gameGridProvider.Grid.TryFindNodeAt(spawnPoint.x, spawnPoint.y, out var node);
+
             if (node.Content.IsOccupied())
             {
                 Debug.LogError($"Cannot spawn unit at {spawnPoint.x}, {spawnPoint.y}");
                 return;
             }
-            
+
             var unit = _factory.Create();
             _units.Push(unit);
             unit.UnitMovement.TrySetLogicPosition(new Vector2Int(node.Content.XIndex, node.Content.YIndex));
@@ -56,7 +58,7 @@ namespace Tactics.Units.Sandbox.Services
             lastUnit.Dispose();
             _activeUnit = _units.Peek();
         }
-        
+
         [ContextMenu(nameof(SeeRangeOfLatestUnit))]
         public void SeeRangeOfLatestUnit()
         {
@@ -64,7 +66,7 @@ namespace Tactics.Units.Sandbox.Services
             var nodes = lastUnit.UnitMovement.GetTilesInRange().ToIndexes();
             _gameGridHighlighter.RequestGridHighlight(nodes, Color.red);
         }
-        
+
         [ContextMenu(nameof(ResetRangeOfLatestUnit))]
         public void ResetRangeOfLatestUnit()
         {
@@ -72,10 +74,10 @@ namespace Tactics.Units.Sandbox.Services
             {
                 return;
             }
-            
+
             _gameGridHighlighter.RequestGridHighlightReset();
         }
-        
+
         [ContextMenu(nameof(CalculatePathForLatestUnit))]
         public void CalculatePathForLatestUnit()
         {
@@ -97,7 +99,7 @@ namespace Tactics.Units.Sandbox.Services
             var nodesIndexes = nodes.ToIndexes();
             _gameGridHighlighter.RequestGridHighlight(nodesIndexes, Color.green);
         }
-        
+
         [ContextMenu(nameof(ResetPathForLatestUnit))]
         public void ResetPathForLatestUnit()
         {
@@ -105,10 +107,10 @@ namespace Tactics.Units.Sandbox.Services
             {
                 return;
             }
-            
+
             _gameGridHighlighter.RequestGridHighlightReset();
         }
-        
+
         [ContextMenu(nameof(PerformMovementToLatestPath))]
         public void PerformMovementToLatestPath()
         {
@@ -116,7 +118,7 @@ namespace Tactics.Units.Sandbox.Services
             {
                 return;
             }
-            
+
             if (_activePath == null)
             {
                 return;

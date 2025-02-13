@@ -13,36 +13,36 @@ namespace Tactics.Players.Services
     {
         private readonly CompositeDisposable _subscriptions = new();
         private readonly Subject<InteractablePlayer> _playerSelectedSubject = new();
-        
+
         private InteractablePlayer _currentlySelectedPlayer;
         private InteractableTile _currentlySelectedTile;
-        
+
         [Inject]
         private PlayerInteractions _playerInteractions;
         [Inject]
         private GameGridHighlighter _gameGridHighlighter;
-        
+
         public IObservable<InteractablePlayer> OnPlayerSelected => _playerSelectedSubject.AsObservable();
-        
+
         public void Initialize()
         {
             _playerInteractions.PlayerInteract.Subscribe(OnPlayerInteract).AddTo(_subscriptions);
             _playerInteractions.TileInteract.Subscribe(OnTileInteract).AddTo(_subscriptions);
         }
-        
+
         public void Dispose()
         {
             _subscriptions?.Dispose();
         }
-        
+
         public void DisplayActionRange(IUnitAction unitAction)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void PerformAction(IUnitAction unitAction)
         {
-            throw new System.NotImplementedException();
+            throw new NotImplementedException();
         }
 
         public void DisplayMovementRange(IUnitMovement unitMovement)
@@ -66,12 +66,12 @@ namespace Tactics.Players.Services
             if (_currentlySelectedPlayer != (InteractablePlayer)interactionData.Interactable)
             {
                 _currentlySelectedPlayer = (InteractablePlayer)interactionData.Interactable;
-                _playerSelectedSubject.OnNext(_currentlySelectedPlayer);   
+                _playerSelectedSubject.OnNext(_currentlySelectedPlayer);
             }
 
             DisplayMovementRange(_currentlySelectedPlayer.UnitFacade.UnitMovement);
         }
-        
+
         private void OnTileInteract(InteractionData interactionData)
         {
             if (_currentlySelectedPlayer == null)
@@ -85,7 +85,7 @@ namespace Tactics.Players.Services
             var unitLastPosition = unitMovement.LastPosition;
             var nodeContent = tileInteraction.Node.Content;
             var tilePosition = new Vector2Int(nodeContent.XIndex, nodeContent.YIndex);
-            
+
             if (unitLastPosition == tilePosition)
             {
                 Debug.LogWarning("Trying to move player to the same tile");

@@ -1,22 +1,22 @@
 {
-    "name": "Tactics.GameGrid",
-    "rootNamespace": "",
-    "references": [
-        "Tactics.Graphs",
-        "Tactics.GridView",
-        "Zenject",
-        "Unity.TextMeshPro",
-        "Tactics.Raycasting",
-        "Tactics.Common",
-        "UniRx"
-    ],
-    "includePlatforms": [],
-    "excludePlatforms": [],
-    "allowUnsafeCode": false,
-    "overrideReferences": false,
-    "precompiledReferences": [],
-    "autoReferenced": true,
-    "defineConstraints": [],
-    "versionDefines": [],
-    "noEngineReferences": false
+  "name": "Tactics.GameGrid",
+  "rootNamespace": "",
+  "references": [
+    "Tactics.Graphs",
+    "Tactics.GridView",
+    "Zenject",
+    "Unity.TextMeshPro",
+    "Tactics.Raycasting",
+    "Tactics.Common",
+    "UniRx"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
 }
